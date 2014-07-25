@@ -1,4 +1,4 @@
-# Read the T_test and X_train datasets and assign them in Xtest and Xtrain variables respectively
+# Read the X_test and X_train datasets and assign them in Xtest and Xtrain variables respectively
 # columns have no headers and ares separated by white spaces
 X_test<-read.csv("./test/X_test.txt",header=FALSE,sep="")
 X_train<-read.csv("./train/X_train.txt",header=FALSE,sep="")
@@ -37,7 +37,7 @@ for (i in 1:nrow(activity_labels))
 }
 rm(i)
 # put the activities vector as the 1st column in the X_data data.frame
-X_data<-cbind(activity,X_data)
+X_data_mean_std<-cbind(activity,X_data_mean_std)
 
 # REQUIREMENT (4): Appropriately label the data set with descriptive variable names
 # already done under REQUIREMENT (1)
@@ -49,10 +49,10 @@ subject_train<-readLines("./train/subject_train.txt")
 # step b: combine them into 1 in the order used so fat (test+train)
 subject<-as.numeric(c(subject_test,subject_train))
 # add it to X_data dataset
-X_data<-cbind(subject,X_data)
+X_data_mean_std<-cbind(subject,X_data_mean_std)
 
 # Group by  activity and subject
-t<-aggregate(X_data,by=list(Group.Activity=X_data$activity,Group.Subject=X_data$subject),FUN=mean)
+t<-aggregate(X_data_mean_std,by=list(Group.Activity=X_data_mean_std$activity,Group.Subject=X_data_mean_std$subject),FUN=mean)
 # remove not needed columns to produce a tidy Dataset
 tidyData<-t[,c(-3,-4)]; rm(t)
 

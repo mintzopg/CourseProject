@@ -1,3 +1,9 @@
+---
+title: "README"
+author: "Georgios Mintzopoulos"
+date: "Friday, July 25, 2014"
+output: html_document
+---
 The following Script will produce the new tidy dataset as requested in the course project. We assume that the data are downloaded in the working directory used for this project and unzipped,
 so we have our working directory where the files "activity_labels.txt", "features.txt", "features_info.txt", "README.txt"  and the two subdirectories "/test" and "/train" exist with the given datasets 
 
@@ -7,10 +13,12 @@ There is a single script with comments pointing to the requirements set by the p
 
 The Script is shown next...
 
-# Read the T_test and X_train datasets and assign them in Xtest and Xtrain variables respectively
-# columns have no headers and ares separated by white spaces
+```
+# Read the X_test and X_train datasets and assign them in Xtest and Xtrain variables respectively
+# columns have no headers and are separated by white spaces
 X_test<-read.csv("./test/X_test.txt",header=FALSE,sep="")
 X_train<-read.csv("./train/X_train.txt",header=FALSE,sep="")
+
 
 # read the features file
 features<-(read.csv("./features.txt",header=FALSE,sep="",stringsAsFactors=FALSE))[,2]
@@ -45,7 +53,7 @@ for (i in 1:nrow(activity_labels))
 }
 rm(i)
 # put the activities vector as the 1st column in the X_data data.frame
-X_data<-cbind(activity,X_data)
+X_data_mean_std<-cbind(activity,X_data_mean_std)
 
 # REQUIREMENT (4): Appropriately label the data set with descriptive variable names
 # already done under REQUIREMENT (1)
@@ -57,13 +65,15 @@ subject_train<-readLines("./train/subject_train.txt")
 # step b: combine them into 1 in the order used so fat (test+train)
 subject<-as.numeric(c(subject_test,subject_train))
 # add it to X_data dataset
-X_data<-cbind(subject,X_data)
+X_data_mean_std<-cbind(subject,X_data_mean_std)
 
 # Group by  activity and subject
-t<-aggregate(X_data,by=list(Group.Activity=X_data$activity,Group.Subject=X_data$subject),FUN=mean)
+t<-aggregate(X_data_mean_std,by=list(Group.Activity=X_data_mean_std$activity,Group.Subject=X_data_mean_std$subject),FUN=mean)
 # remove not needed columns to produce a tidy Dataset
 tidyData<-t[,c(-3,-4)]; rm(t)
 
 # write the new tidy data to file
 write.table(tidyData, "../tidyData.txt",row.names=FALSE)
+
+```
 
