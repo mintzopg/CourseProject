@@ -1,5 +1,3 @@
-setwd("C:\\R\\Projects\\GettingAndCleaningData\\CourseProject\\UCI HAR Dataset")
-
 # Read the T_test and X_train datasets and assign them in Xtest and Xtrain variables respectively
 # columns have no headers and ares separated by white spaces
 X_test<-read.csv("./test/X_test.txt",header=FALSE,sep="")
