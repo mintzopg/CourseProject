@@ -65,6 +65,5 @@ t<-aggregate(X_data,by=list(Group.Activity=X_data$activity,Group.Subject=X_data$
 tidyData<-t[,c(-3,-4)]; rm(t)
 
 # write the new tidy data to file
-write.csv(newTidyDF,file="../tidyData.csv",row.names=FALSE)
-write.table(newTidyDF, "../tidyData.txt",row.names=FALSE)
+write.table(tidyData, "../tidyData.txt",row.names=FALSE)
 
